@@ -107,9 +107,9 @@ bool cuckoo_filter_add(cuckoo_filter *filter, const char *key)
 	//printf("No enough space. Before expanding...\n");
 	//print_buckets(filter);
 
-	/* 记录每次扩容时的空间利用率 */
-	fprintf(log_file, "storage utilization when buckets are full: %.2f%%\n",
-		(double)filter->nr_items / (filter->nr_buckets * filter->nr_slots) * 100);
+	/* 记录每次扩容前后的空间利用率 */
+	fprintf(log_file, "storage utilization before expanding %.2f%%, ",
+		(double)(filter->nr_items - 1) / (filter->nr_buckets * filter->nr_slots) * 100);
 
 	/* 扩容后直接把fp放进新增的槽位. */
 	cuckoo_filter_expand(filter);
@@ -120,6 +120,9 @@ bool cuckoo_filter_add(cuckoo_filter *filter, const char *key)
 	
 	//printf("After expanding...\n");
 	//print_buckets(filter);
+
+	fprintf(log_file, "after expanding %.2f%%\n",
+		(double)(filter->nr_items) / (filter->nr_buckets * filter->nr_slots) * 100);
 
 	return true;
 }

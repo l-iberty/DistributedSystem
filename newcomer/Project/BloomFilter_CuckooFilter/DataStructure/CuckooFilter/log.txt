@@ -1,19 +1,19 @@
-storage utilization when buckets are full: 103.13%
-storage utilization when buckets are full: 100.00%
-storage utilization when buckets are full: 101.39%
-storage utilization when buckets are full: 100.96%
-storage utilization when buckets are full: 100.66%
-storage utilization when buckets are full: 100.45%
-storage utilization when buckets are full: 100.30%
-storage utilization when buckets are full: 100.20%
-storage utilization when buckets are full: 100.13%
-storage utilization when buckets are full: 100.09%
-storage utilization when buckets are full: 100.06%
-storage utilization when buckets are full: 100.04%
-storage utilization when buckets are full: 100.03%
-storage utilization when buckets are full: 100.02%
-storage utilization when buckets are full: 100.01%
-storage utilization when buckets are full: 100.01%
-storage utilization when buckets are full: 100.01%
-storage utilization when buckets are full: 100.00%
-storage utilization when buckets are full: 100.00%
+storage utilization before expanding 93.75%, after expanding 64.58%
+storage utilization before expanding 91.67%, after expanding 62.50%
+storage utilization before expanding 98.61%, after expanding 69.23%
+storage utilization before expanding 100.00%, after expanding 69.08%
+storage utilization before expanding 99.34%, after expanding 67.86%
+storage utilization before expanding 99.55%, after expanding 66.67%
+storage utilization before expanding 100.00%, after expanding 66.87%
+storage utilization before expanding 100.00%, after expanding 67.15%
+storage utilization before expanding 100.00%, after expanding 66.76%
+storage utilization before expanding 100.00%, after expanding 66.88%
+storage utilization before expanding 100.00%, after expanding 66.81%
+storage utilization before expanding 100.00%, after expanding 66.69%
+storage utilization before expanding 100.00%, after expanding 66.68%
+storage utilization before expanding 100.00%, after expanding 66.71%
+storage utilization before expanding 100.00%, after expanding 66.67%
+storage utilization before expanding 100.00%, after expanding 66.69%
+storage utilization before expanding 100.00%, after expanding 66.67%
+storage utilization before expanding 100.00%, after expanding 66.68%
+storage utilization before expanding 100.00%, after expanding 66.67%
