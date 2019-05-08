@@ -15,14 +15,17 @@
 
 #### (1) case 1
 <img src="images/no_successor1.png" height="200" align=center/>
+
 查询结果为`First`.
 
 #### (2) case 2
 <img src="images/no_successor2.png" height="200" align=center/>
+
 查询结果为`First`.
 
 #### (3) case 3
 <img src="images/no_successor3.png" height="200" align=center/>
+
 跳转到`First`继续查询.
 
 ### 2. 数据(Data)位于查询死角
@@ -30,14 +33,20 @@
 
 #### (1) case 1
 <img src="images/blind_spot1.png" height="200" align=center/>
+
 此时从`Last`开始查找, 对应于上一小节中的**case 2**, 如下图所示:
+
 <img src="images/blind_spot1_lookup.png" height="200" align=center/>
+
 如果在`Last`上执行`Lookup(Data)`查询失败, 说明遇到了下面的情形：
 
 #### (2) case 2
 <img src="images/blind_spot2.png" height="200" align=center/>
+
 此时从`First`开始查找, 对应于上一小节中的**case 3**, 如下图所示:
+
 <img src="images/blind_spot2_lookup.png" height="200" align=center/>
+
 之后一定可以找到`Data`.
 
 ## 三. 实现的功能
