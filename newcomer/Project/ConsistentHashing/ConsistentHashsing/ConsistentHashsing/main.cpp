@@ -495,6 +495,8 @@ void interact()
 			break;
 		default:
 			cout << "Invalid number!\n";
+			cin.clear();
+			cin.sync();
 			break;
 		}
 	}

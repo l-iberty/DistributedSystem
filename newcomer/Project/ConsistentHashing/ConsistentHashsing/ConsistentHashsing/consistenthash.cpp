@@ -440,6 +440,8 @@ void ConsistentHashing::UpdateFingerTable()
  */
 Node *ConsistentHashing::FindPrev(Node *current)
 {
+	if (current->GetPrev()) { return current->GetPrev(); }
+
 	map<unsigned int, Node*>::reverse_iterator last = mRing.rbegin();
 	map<unsigned int, Node*>::iterator it = mRing.begin();
 
