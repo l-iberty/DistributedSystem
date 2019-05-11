@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -66,7 +66,7 @@ Node *SkipList::Find(int data) /* O(log n) */
 {
 	if (mSize == 0) return NULL;
 
-	int cmpTimes = 0; /* ÔªËØ±È½Ï´ÎÊı */
+	int cmpTimes = 0; /* å…ƒç´ æ¯”è¾ƒæ¬¡æ•° */
 
 	Node *p = mNodeHeaders[mTopLevel]->Flink;
 	while (p)
@@ -88,16 +88,16 @@ Node *SkipList::Find(int data) /* O(log n) */
 		
 		if (p->Data < data)
 		{
-			p = p->Dlink; /* Ö±½Ó½øÈëÏÂÒ»²ã */
+			p = p->Dlink; /* ç›´æ¥è¿›å…¥ä¸‹ä¸€å±‚ */
 		}
 		else
 		{
-			p = p->Blink->Dlink; /* »ØÍËÒ»¸öÎ»ÖÃºóÔÙ½øÈëÏÂÒ»²ã */
+			p = p->Blink->Dlink; /* å›é€€ä¸€ä¸ªä½ç½®åå†è¿›å…¥ä¸‹ä¸€å±‚ */
 		}
 
 		if (p && p->Blink == NULL)
 		{
-			p = p->Flink; /* Èç¹ûpÖ¸ÏòÍ·½Úµã, ÓÉÓÚÆä²»±£´æÊı¾İ, ËùÒÔÒª°ÑpÒÆ¶¯µ½Á´±íµÄµÚÒ»¸ö±£´æÁËÊı¾İµÄ½Úµã */
+			p = p->Flink; /* å¦‚æœpæŒ‡å‘å¤´èŠ‚ç‚¹, ç”±äºå…¶ä¸ä¿å­˜æ•°æ®, æ‰€ä»¥è¦æŠŠpç§»åŠ¨åˆ°é“¾è¡¨çš„ç¬¬ä¸€ä¸ªä¿å­˜äº†æ•°æ®çš„èŠ‚ç‚¹ */
 		}
 	}
 
@@ -109,7 +109,7 @@ bool SkipList::Delete(int data) /* O(log n) */
 	Node *p = Find(data);
 	if (p == NULL) return false;
 
-	/* ´Óµ±Ç°²ãÖ±´ïµÚ0²ãÂ·¾¶ÉÏµÄÖµÎªdataµÄ½Úµã¶¼ÒªÉ¾³ı */
+	/* ä»å½“å‰å±‚ç›´è¾¾ç¬¬0å±‚è·¯å¾„ä¸Šçš„å€¼ä¸ºdataçš„èŠ‚ç‚¹éƒ½è¦åˆ é™¤ */
 	while (p)
 	{
 		Node *prev = p->Blink;
@@ -122,7 +122,7 @@ bool SkipList::Delete(int data) /* O(log n) */
 		}
 		delete p;
 
-		if (prev->Blink == NULL && prev->Flink == NULL) /* ¸Ã²ãÖ»Ê£Í·½Úµã, ÆäÓà½ÚµãÒÑ±»É¾³ı */
+		if (prev->Blink == NULL && prev->Flink == NULL) /* è¯¥å±‚åªå‰©å¤´èŠ‚ç‚¹, å…¶ä½™èŠ‚ç‚¹å·²è¢«åˆ é™¤ */
 		{
 			mTopLevel--;
 		}
