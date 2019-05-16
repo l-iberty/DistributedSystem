@@ -2,22 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include <assert.h>
 #include "skiplist.h"
 
 #define max(a,b) (a)>(b)?(a):(b)
+#define HEIGHT(x) (int)ceil((double)log((double)x) / log(2.0))
 
-
-SkipList::SkipList(int maxLevel)
+SkipList::SkipList(int maxSize)
 {
-	mMaxLevel = maxLevel;
+	mMaxLevel = HEIGHT(maxSize);
+	mMaxSize = maxSize;
 	mSize = 0;
 	mTopLevel = -1;
 	mSeed = INT_MAX;
-	mNodeHeaders = new Node*[maxLevel];
+	mNodeHeaders = new Node*[mMaxLevel];
 
 	Node *down = NULL;
-	for (int i = 0; i < maxLevel; i++)
+	for (int i = 0; i < mMaxLevel; i++)
 	{
 		mNodeHeaders[i] = new Node(0);
 		mNodeHeaders[i]->Dlink = down;
@@ -143,7 +145,7 @@ void SkipList::Display()
 
 	for (int i = mTopLevel; i >= 0; i--)
 	{
-		if (mNodeHeaders[i] && mNodeHeaders[i]->Flink)
+		if (mNodeHeaders[i]->Flink)
 		{
 			printf("L%d (%d): ", i, mNodeHeaders[i]->Data);
 			PrintNodes(mNodeHeaders[i]);
@@ -151,6 +153,39 @@ void SkipList::Display()
 	}
 
 	printf("+--------------------------------------------+\n");
+}
+
+SkipList *SkipList::DeepCopy()
+{
+	SkipList *copy = new SkipList(mMaxSize);
+	copy->mMaxLevel = mMaxLevel;
+	copy->mMaxSize = mMaxSize;
+	copy->mSeed = mSeed;
+	copy->mSize = mSize;
+	copy->mTopLevel = mTopLevel;
+
+	std::map<int, Node*> current, prev;
+	Node *down = NULL;
+	for (int i = 0; i < mMaxLevel; i++)
+	{
+		copy->mNodeHeaders[i] = DeepCopy(mNodeHeaders[i], current);
+		copy->mNodeHeaders[i]->Dlink = down;
+		down = copy->mNodeHeaders[i];
+
+		Node *p = copy->mNodeHeaders[i]->Flink;
+		while (p)
+		{
+			if (prev.find(p->Data) != prev.end())
+			{
+				p->Dlink = prev[p->Data];
+			}
+			p = p->Flink;
+		}
+		prev = current;
+		current.clear();
+	}
+
+	return copy;
 }
 
 int SkipList::Random()
@@ -211,4 +246,22 @@ void SkipList::PrintNodes(Node *head)
 			assert(p->Dlink->Data == p->Data);
 		}
 	}
+}
+
+Node *SkipList::DeepCopy(Node *head, std::map<int, Node*>& m)
+{
+	Node *cpyhead = new Node(head->Data);
+	Node *p = head->Flink;
+	Node *prev = cpyhead;
+	while (p)
+	{
+		Node *node = new Node(p->Data);
+		m[node->Data] = node;
+		node->Blink = prev;
+		prev->Flink = node;
+		prev = node;
+		p = p->Flink;
+	}
+
+	return cpyhead;
 }

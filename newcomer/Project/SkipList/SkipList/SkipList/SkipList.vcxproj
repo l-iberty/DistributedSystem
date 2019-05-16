@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CCA29A4F-82AD-4962-9A9B-D4248A314DD6}</ProjectGuid>
+    <ProjectGuid>{F3E1E2ED-09B4-462F-A314-D52E18E2D393}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SkipList</RootNamespace>
   </PropertyGroup>
