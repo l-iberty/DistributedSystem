@@ -3,32 +3,40 @@
 #include <pthread.h>
 #include <assert.h>
 #include <iostream>
-#include "RpcClient.h"
+#include "RpcService.h"
+#include "RpcServiceProxyImpl.h"
 
 #define MAX_THD 65535
 
 void *threadRoutine(void *param)
 {
-    RpcClient client;
-    RpcService *service = client.getService(inet_addr("127.0.0.1"), htons(5000));
-
     long n = (long) param;
+    RpcServiceProxyImpl service;
+
+    std::cout << "======= TEST " << std::to_string(n) << " =======" << std::endl;
+
+    /* test `sayHello' */
     std::string str = "thread" + std::to_string(n);
-    std::string ret = service->sayHello(str);
-    std::cout << ret.c_str() << std::endl;
+    std::string ret = service.sayHello(str);
+
+    /* test `introduce' */
+    std::map<std::string, std::string> m = service.introduce();
 
     std::string s = "hello," + str;
-    if (!strcmp(ret.c_str(), s.c_str()))
+    if (!strcmp(ret.c_str(), s.c_str()) &&
+        !strcmp(m["name"].c_str(), "Bob") &&
+        !strcmp(m["email"].c_str(), "Bob@xxx.com"))
     {
-        std::cout << "TEST " << n << " passed." << std::endl;
+        std::cout << "retval of sayHello>> " << ret.c_str() << std::endl;
+        std::cout << "retval of introduce>> name:" << m["name"].c_str() << ", email:" << m["email"] << std::endl;
+        std::cout << "======= TEST " << n << " passed. =======" << std::endl;
     }
     else
     {
-        std::cout << "TEST " << n << " failed." << std::endl;
+        std::cerr << "======= TEST " << n << " failed. =======" << std::endl;
         assert(0);
     }
 
-    delete service;
     return NULL;
 }
 

@@ -12,9 +12,9 @@ class RpcCoderHelper
 {
 public:
     static void decode(std::string &s, std::vector<std::string> &strs, std::vector<int> &nums);
-    static std::string encode(std::vector<std::string> &strs,std::vector<int> &nums);
 
-private:
+    static std::string encode(std::vector<std::string> &strs, std::vector<int> &nums);
+
     static std::vector<std::string> split(const std::string &s, const std::string &seperator);
 };
 

@@ -11,6 +11,8 @@ class RpcServiceImpl : public RpcService
 {
 public:
     std::string sayHello(std::string str) override;
+
+    std::map<std::string, std::string> introduce() override;
 };
 
 

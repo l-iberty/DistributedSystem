@@ -1,4 +1,5 @@
 #include <string.h>
+#include <arpa/inet.h>
 #include <iostream>
 #include <string>
 #include "RpcServiceProxyImpl.h"
@@ -8,7 +9,7 @@
 
 std::string RpcServiceProxyImpl::sayHello(std::string str)
 {
-    std::string res; /* 返回值 */
+    std::string res;
 
     std::vector<std::string> strs;
     std::vector<int> nums;
@@ -20,14 +21,13 @@ std::string RpcServiceProxyImpl::sayHello(std::string str)
     /* 消息编码 */
     strs.push_back(str);
     std::string arg = RpcCoderHelper::encode(strs, nums);
-    msg->serverAddr = getServiceAddr().addr;
-    msg->serverPort = getServiceAddr().port;
-    msg->u1.argLen = arg.length();
+    getServerAddr(&msg->serverAddr, &msg->serverPort);
     strncpy(msg->funcName, "sayHello", MAX_FUNCNAME_LEN);
+    msg->u1.argLen = arg.length();
     strcpy(msg->u2.arg, arg.c_str());
 
-    RpcInvoker *invoker = new RpcClientInvoker;
-    if (invoker->invoke(msg))
+    RpcClientInvoker invoker;
+    if (invoker.invoke(msg))
     {
         /* 消息解码, 取出返回值 */
         strs.clear();
@@ -40,6 +40,64 @@ std::string RpcServiceProxyImpl::sayHello(std::string str)
         std::cerr << "[RpcServiceProxyImpl::sayHello] error" << std::endl;
     }
 
-    delete invoker;
     return res;
+}
+
+std::map<std::string, std::string> RpcServiceProxyImpl::introduce()
+{
+    std::map<std::string, std::string> res;
+
+    std::vector<std::string> strs;
+    std::vector<int> nums;
+
+    char buf[BUFSIZ];
+    bzero(buf, BUFSIZ);
+    RpcMessage *msg = (RpcMessage *) buf;
+
+    /* 消息编码 */
+    getServerAddr(&msg->serverAddr, &msg->serverPort);
+    strncpy(msg->funcName, "introduce", MAX_FUNCNAME_LEN);
+    msg->u1.argLen = 0;
+
+    RpcClientInvoker invoker;
+    if (invoker.invoke(msg))
+    {
+        /* 消息解码, 取出返回值 */
+        std::string s = msg->u2.ret;
+        RpcCoderHelper::decode(s, strs, nums);
+
+        for (std::string str:strs)
+        {
+            std::vector<std::string> tokens = RpcCoderHelper::split(str, ",");
+            res[tokens[0]] = tokens[1];
+        }
+    }
+    else
+    {
+        std::cerr << "[RpcServiceProxyImpl::introduce] error" << std::endl;
+    }
+
+    return res;
+}
+
+bool RpcServiceProxyImpl::getServerAddr(uint32_t *addr, uint16_t *port)
+{
+    FILE *fp = fopen("server.cfg", "r");
+    if (fp == NULL)
+    {
+        perror("fopen");
+        return false;
+    }
+
+    char buf[BUFSIZ];
+    bzero(buf, BUFSIZ);
+    fgets(buf, BUFSIZ, fp);
+    *addr = inet_addr(buf);
+
+    bzero(buf, BUFSIZ);
+    fgets(buf, BUFSIZ, fp);
+    *port = htons(atoi(buf));
+
+    fclose(fp);
+    return true;
 }

@@ -33,10 +33,9 @@ void *recvThread(void *param)
     msg->clientAddr = cli_addr.sin_addr.s_addr;
     msg->clientPort = cli_addr.sin_port;
 
-    RpcInvoker *invoker = new RpcServerInvoker;
-    if(!invoker->invoke(msg)) /* 返回值通过 msg 传出 */
+    RpcServerInvoker invoker;
+    if (!invoker.invoke(msg)) /* 返回值通过 msg 传出 */
     {
-        delete invoker;
         return NULL;
     }
 
@@ -46,7 +45,6 @@ void *recvThread(void *param)
         perror("send");
     }
 
-    delete invoker;
     return NULL;
 }
 
@@ -116,7 +114,7 @@ void RpcServer::run(uint16_t port)
             perror("pthread_create");
         }
 
-        pthread_join(tid,&retval); /* 等待线程结束 */
+        pthread_join(tid, &retval); /* 等待线程结束 */
         close(cli_sock); /* 回收文件描述符, 否则大量的连接会导致 accept 报错: too many open files */
     }
 }
