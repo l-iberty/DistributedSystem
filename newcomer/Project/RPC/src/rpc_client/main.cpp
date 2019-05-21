@@ -48,7 +48,7 @@ int main()
     /* 创建大量线程, 测试并发性 */
     for (int i = 0; i < MAX_THD; i++)
     {
-        if (pthread_create(&tid[i], NULL, threadRoutine, (void *) i) < 0)
+        if (pthread_create(&tid[i], NULL, threadRoutine, (void *) i) != 0)
         {
             perror("pthread_create");
         }
