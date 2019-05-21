@@ -42,18 +42,21 @@ void *threadRoutine(void *param)
 
 int main()
 {
-    pthread_t tid;
+    pthread_t tid[MAX_THD];
     void *retval;
 
     /* 创建大量线程, 测试并发性 */
     for (int i = 0; i < MAX_THD; i++)
     {
-        int ret = pthread_create(&tid, NULL, threadRoutine, (void *) i);
-        if (ret < 0)
+        if (pthread_create(&tid[i], NULL, threadRoutine, (void *) i) < 0)
         {
             perror("pthread_create");
         }
-        pthread_join(tid, &retval);
+    }
+
+    for (int i = 0; i < MAX_THD; i++)
+    {
+        pthread_join(tid[i], &retval);
     }
 
     return 0;
