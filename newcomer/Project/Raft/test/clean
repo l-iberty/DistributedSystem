@@ -1,0 +1,14 @@
+#!/bin/bash
+
+p=9000
+SIGKILL=9
+
+for ((i=0;i<5;i++));
+do
+	let port=p+i
+	pid=`netstat -nlp|grep $port|awk '{print $7}'|cut -d "/" -f 1`
+	echo "kill $SIGKILL $pid"
+	kill $SIGKILL $pid
+done
+
+rm block0 block1 block2 block3 block4
