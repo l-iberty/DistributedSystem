@@ -6,7 +6,7 @@
 
 ## 测试
 ### 1. 启动
-运行启动脚本`start`创建5个terminal, 每个节点的初始状态为Follower, 选举超时后会经过一轮选举会选出一个Leader, Leader先给自己附加日志项(详见`log.txt`), 然后向其他节点发送`AppendEntries`来宣示自己的地位并完成日志复制(每次复制多少个日志项有`RaftAlg.h`的`MAX_ENTRIES`宏决定).
+运行启动脚本`start`创建5个terminal, 每个节点的初始状态为Follower, 选举超时后经过一轮选举会选出一个Leader, Leader先给自己附加日志项(详见`log.txt`), 然后向其他节点发送`AppendEntries`来宣示自己的地位并完成日志复制(每次复制多少个日志项由`RaftAlg.h`的`MAX_ENTRIES`宏决定).
 
 ### 2. Leader崩溃
 终止当前Leader进程后总会又有新的Leader诞生, 但是当只剩下两个节点时每个节点至多只能获得2张选票, 而在5个节点的Raft集群中至少要获得3张选票的Candidate才能成为Leader, 所以此时Raft集群因无法选出Leader而无法正常运作.
