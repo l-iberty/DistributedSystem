@@ -17,7 +17,7 @@ void followerTimerThread(sigval_t sig)
 {
     RaftNode *rfNode = (RaftNode *) sig.sival_ptr;
 
-    assert(rfNode->state() == Follower);
+    if (rfNode->state() != Follower) return;
 
     printf(STDOUT_L_GREEN "%s[%d] election timeout, convert to candidate\n" STDOUT_NONE,
            rfNode->stateToString().c_str(), rfNode->id());
@@ -50,7 +50,7 @@ void candidateTimerThread(sigval_t sig)
 {
     RaftNode *rfNode = (RaftNode *) sig.sival_ptr;
 
-    assert(rfNode->state() == Candidate);
+    if (rfNode->state() != Candidate) return;
 
     printf("%s[%d] starts a new election with term %d\n",
            rfNode->stateToString().c_str(), rfNode->id(), rfNode->currentTerm());
@@ -116,7 +116,7 @@ void leaderTimerThread(sigval_t sig)
 {
     RaftNode *rfNode = (RaftNode *) sig.sival_ptr;
 
-    assert(rfNode->state() == Leader);
+    if (rfNode->state() != Leader) return;
 
     printf("%s[id=%d,currentTerm=%d,votedFor=%d,log=%s] timeout\n",
            rfNode->stateToString().c_str(), rfNode->id(), rfNode->currentTerm(), rfNode->votedFor(),

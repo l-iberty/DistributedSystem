@@ -293,7 +293,7 @@ void RaftNode::stepDown(int term)
 
 void RaftNode::comeToPower(int votes)
 {
-    assert(mState == Candidate); /* only candidate can come to power and become leader */
+    if (mState != Candidate) return; /* only candidate can come to power and become leader */
 
     printf(STDOUT_L_GREEN "%s[%d] received %d votes, becomes leader with term %d.\n" STDOUT_NONE,
            stateToString().c_str(), mId, votes, mCurrentTerm);
