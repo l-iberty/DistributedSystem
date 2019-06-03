@@ -1,4 +1,5 @@
 # Raft
+[Raft Consensus Algorithm](https://raft.github.io/)
 
 ## 实现功能
 - [x] Leader election
