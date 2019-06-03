@@ -444,7 +444,6 @@ std::vector<AppendEntriesResult> RaftNode::doAppendEntries()
             int prevLogIndex = mNextIndex[id] - 1;
             int prevLogTerm = logTerm(prevLogIndex);
             std::vector<Log> entries = sliceLoglist(mNextIndex[id], mNextIndex[id] + MAX_ENTRIES - 1);
-            /* 如果entries为空, 那么发送的就是heartbeat */
 
             if (mRpcClient.appendEntries(res, port, mCurrentTerm, mId, prevLogIndex, prevLogTerm, mCommitIndex, entries))
             {
