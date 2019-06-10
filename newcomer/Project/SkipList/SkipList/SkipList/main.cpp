@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <stdio.h>
-#include <conio.h>
 #include <math.h>
 #include <assert.h>
 #include "skiplist.h"

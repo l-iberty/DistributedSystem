@@ -4,6 +4,15 @@
 #include <stdio.h>
 #include <map>
 
+#ifndef INT_MAX
+#define INT_MAX (2147483647)
+#endif
+
+#ifndef INT_MIN
+#define INT_MIN (-2147483647-1)
+#endif
+
+
 struct Node
 {
 	int Data;
