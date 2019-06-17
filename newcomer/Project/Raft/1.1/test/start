@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for ((i=0;i<5;i++));
+do
+	echo 0 > block$i
+done
+
+# 启动5个terminal
+gnome-terminal -t "Node[0](5000;9000)" -x bash -c "./Raft 0 5 5000 5001 5002 5003 5004 9000 9001 9002 9003 9004"
+gnome-terminal -t "Node[1](5001;9001)" -x bash -c "./Raft 1 5 5000 5001 5002 5003 5004 9000 9001 9002 9003 9004"
+gnome-terminal -t "Node[2](5002;9002)" -x bash -c "./Raft 2 5 5000 5001 5002 5003 5004 9000 9001 9002 9003 9004"
+gnome-terminal -t "Node[3](5003;9003)" -x bash -c "./Raft 3 5 5000 5001 5002 5003 5004 9000 9001 9002 9003 9004"
+gnome-terminal -t "Node[4](5004;9004)" -x bash -c "./Raft 4 5 5000 5001 5002 5003 5004 9000 9001 9002 9003 9004"
+
