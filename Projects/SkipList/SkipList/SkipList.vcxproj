@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F3E1E2ED-09B4-462F-A314-D52E18E2D393}</ProjectGuid>
+    <ProjectGuid>{82134661-12D3-48D0-A48D-724F50DB8D2A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SkipList</RootNamespace>
   </PropertyGroup>
@@ -78,11 +78,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="random.h" />
     <ClInclude Include="skiplist.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="skiplist.cpp" />
+    <ClCompile Include="random.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
