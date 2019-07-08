@@ -59,6 +59,13 @@ cuckoo_filter* create_cuckoo_filter(
 	return filter;
 }
 
+/**
+ * 问: 如果添加key1导致key2被踢出, 那么key2就会被放到另一位置, 这样一来, 后续查找key2时会失败吗?
+ * 答: 不会. key1只能被放到两个bucket中的任意一个, 记为T1和T2. 假设T1中的key2被踢出, 那么就需要
+ *     重新选择key2的存放位置. 对于任何一个key, 它能被放入的bucket只有两个选择, 而这两个bucket
+ *     只与key本身有关. 现在已知key2被放入了T1, 不妨设另一个bucket是T3, 那么被踢出的key2只能选择
+ *     T1或T3, 在之后对key2的查找也只能在T1和T3中进行, 这显然不会失败.
+ */
 bool cuckoo_filter_add(cuckoo_filter *filter, const char *key)
 {
 	unsigned int idx, idx1, idx2, c;

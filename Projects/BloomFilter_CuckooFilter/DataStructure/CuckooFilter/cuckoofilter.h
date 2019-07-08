@@ -18,7 +18,7 @@ struct cuckoo_filter
 	int nr_buckets; /* 每个桶对应buckets的一行. nr_buckets = buckets.row_size */
 	int nr_slots;   /* 每个桶有几路槽位. nr_slots = buckets.col_size */
 	int nr_items;   /* buckets存放了多少个指纹? */
-	int *slot_idx;     /* 保存每个bucket中的下一个可被踢出的指纹所在的槽位 */
+	int *slot_idx;  /* 保存每个bucket中的下一个可被踢出的指纹所在的槽位 */
 	int max_kicks;
 	hash_func hash;
 	fingerprint_func fingerprint;
